@@ -1,138 +1,74 @@
-import * as React from "react"
+import * as React from "react";
 import {
-  AudioWaveform,
+  Bold,
   BookOpen,
-  Bot,
-  Command,
+  FileText,
   Frame,
-  GalleryVerticalEnd,
+  HeartHandshake,
+  House,
   Map,
+  MessageCircleQuestion,
   PieChart,
-  Settings2,
-  SquareTerminal,
-} from "lucide-react"
+  ScrollText,
+} from "lucide-react";
 
-import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
-import { NavUser } from "@/components/nav-user"
-import { TeamSwitcher } from "@/components/team-switcher"
+import { NavMain } from "@/components/nav-main";
+// import { NavProjects } from "@/components/nav-projects";
+import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
-// This is sample data.
+// Import your images
+import OpenSidebarLogo from "@/img/SkillEdgeLogo.svg"; 
+import CollapsedSidebarLogo from "@/img/FaviconLogo1.svg"; 
+
 const data = {
   user: {
     name: "shadcn",
     email: "m@example.com",
     avatar: "/avatars/shadcn.jpg",
   },
-  teams: [
-    {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
-  ],
   navMain: [
     {
-      title: "Playground",
+      title: "Home",
       url: "#",
-      icon: SquareTerminal,
+      icon: House,
       isActive: true,
-      items: [
-        {
-          title: "History",
-          url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
-      ],
     },
     {
-      title: "Models",
+      title: "Resume Template",
       url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
+      icon: FileText,
+    },
+    {
+      title: "Cover Letter",
+      url: "#",
+      icon: ScrollText,
+    },
+    {
+      title: "Blog",
+      url: "#",
+      icon: Bold,
+    },
+    {
+      title: "FAQ",
+      url: "#",
+      icon: MessageCircleQuestion,
     },
     {
       title: "Documentation",
       url: "#",
       icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
     },
     {
-      title: "Settings",
+      title: "Help & Feedback",
       url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
+      icon: HeartHandshake,
     },
   ],
   projects: [
@@ -152,22 +88,59 @@ const data = {
       icon: Map,
     },
   ],
-}
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const [isCollapsed, setIsCollapsed] = React.useState(true); // Set initial state to collapsed
+  const sidebarRef = React.useRef<HTMLDivElement>(null);
+
+  // Detect sidebar state using MutationObserver
+  React.useEffect(() => {
+    const sidebarElement = sidebarRef.current;
+
+    const observer = new MutationObserver(() => {
+      if (sidebarElement?.getAttribute("data-state") === "collapsed") {
+        setIsCollapsed(true);
+      } else {
+        setIsCollapsed(false);
+      }
+    });
+
+    // Observe attributes of the sidebar element
+    if (sidebarElement) {
+      observer.observe(sidebarElement, {
+        attributes: true,
+        attributeFilter: ["data-state"],
+      });
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar ref={sidebarRef} collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <img
+          src={isCollapsed ? CollapsedSidebarLogo : OpenSidebarLogo}
+          alt={isCollapsed ? "Collapsed Logo" : "Open Logo"}
+          style={{
+            width: isCollapsed ? "50px" : "150px",
+            height: "auto",
+            marginTop: "5px", 
+            marginLeft: "3px", 
+          }}
+        />
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent style={{marginTop: '5px' }}>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        {/* <NavProjects projects={data.projects} /> */}
       </SidebarContent>
-      <SidebarFooter>
+      <SidebarFooter> 
         <NavUser user={data.user} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

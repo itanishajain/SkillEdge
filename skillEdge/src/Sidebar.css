@@ -1,0 +1,16 @@
+.logo-container {
+  height: 60px; 
+  overflow: hidden;
+}
+
+.sidebar-logo {
+    top: 10px;
+  width: 50px; /* Set a fixed width */
+  height: auto;
+  transition: width 0.3s ease-in-out; /* Smooth transition */
+}
+
+[data-state="expanded"] .sidebar-logo {
+  width: 150px; /* Width when sidebar is expanded */
+}
+

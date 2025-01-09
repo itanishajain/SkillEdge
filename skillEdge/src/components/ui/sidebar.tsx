@@ -3,7 +3,7 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { VariantProps, cva } from "class-variance-authority"
-import { PanelLeft } from "lucide-react"
+import { AlignJustify } from "lucide-react";
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
@@ -57,7 +57,8 @@ const SidebarProvider = React.forwardRef<
 >(
   (
     {
-      defaultOpen = true,
+      // defaultOpen = true,
+      defaultOpen = false,
       open: openProp,
       onOpenChange: setOpenProp,
       className,
@@ -251,6 +252,14 @@ const Sidebar = React.forwardRef<
             className="flex h-full w-full flex-col bg-sidebar group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow"
           >
             {children}
+            <SidebarTrigger
+              className={cn(
+                "absolute transition-all",
+                state === "collapsed"
+                  ? "bottom-12 left-1/2 transform -translate-x-1/2"
+                  : "top-4 right-2"
+              )}
+            />
           </div>
         </div>
       </div>
@@ -258,6 +267,8 @@ const Sidebar = React.forwardRef<
   }
 )
 Sidebar.displayName = "Sidebar"
+
+// ...existing code...
 
 const SidebarTrigger = React.forwardRef<
   React.ElementRef<typeof Button>,
@@ -278,7 +289,7 @@ const SidebarTrigger = React.forwardRef<
       }}
       {...props}
     >
-      <PanelLeft />
+      <AlignJustify size={40} color="#ffffff" strokeWidth={2} />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   )
