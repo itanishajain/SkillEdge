@@ -123,21 +123,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     <Sidebar ref={sidebarRef} collapsible="icon" {...props}>
       <SidebarHeader>
         <img
-          src={isCollapsed ? CollapsedSidebarLogo : OpenSidebarLogo}
+          src={window.innerWidth < 768 ? OpenSidebarLogo : isCollapsed ? CollapsedSidebarLogo : OpenSidebarLogo}
           alt={isCollapsed ? "Collapsed Logo" : "Open Logo"}
           style={{
-            width: isCollapsed ? "50px" : "150px",
+            width: window.innerWidth < 768 ? "70%" : isCollapsed ? "50px" : "70%",
             height: "auto",
-            marginTop: "5px", 
-            marginLeft: "3px", 
+            marginTop: "4px",
+            marginLeft: "2px",
           }}
         />
       </SidebarHeader>
-      <SidebarContent style={{marginTop: '5px' }}>
+      <SidebarContent style={{ marginTop: "5px" }}>
         <NavMain items={data.navMain} />
         {/* <NavProjects projects={data.projects} /> */}
       </SidebarContent>
-      <SidebarFooter> 
+      <SidebarFooter>
         <NavUser user={data.user} />
       </SidebarFooter>
       <SidebarRail />
