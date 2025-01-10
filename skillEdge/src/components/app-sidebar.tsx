@@ -24,8 +24,9 @@ import {
 } from "@/components/ui/sidebar";
 
 // Import your images
-import OpenSidebarLogo from "@/img/SkillEdgeLogo.svg"; 
-import CollapsedSidebarLogo from "@/img/FaviconLogo1.svg"; 
+import OpenSidebarLogo from "@/img/SkillEdgeLogo.svg";
+import CollapsedSidebarLogo from "@/img/FaviconLogo1.svg";
+import { Link } from "react-router-dom";
 
 const data = {
   user: {
@@ -36,38 +37,38 @@ const data = {
   navMain: [
     {
       title: "Home",
-      url: "#",
+      url: "/",
       icon: House,
       isActive: true,
     },
     {
       title: "Resume Template",
-      url: "#",
+      url: "/resume-template",
       icon: FileText,
     },
     {
       title: "Cover Letter",
-      url: "#",
+      url: "/cover-letter",
       icon: ScrollText,
     },
     {
       title: "Blog",
-      url: "#",
+      url: "/blog",
       icon: Bold,
     },
     {
       title: "FAQ",
-      url: "#",
+      url: "/faq",
       icon: MessageCircleQuestion,
     },
     {
       title: "Documentation",
-      url: "#",
+      url: "/documentation",
       icon: BookOpen,
     },
     {
       title: "Help & Feedback",
-      url: "#",
+      url: "/help-feedback",
       icon: HeartHandshake,
     },
   ],
@@ -122,16 +123,26 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar ref={sidebarRef} collapsible="icon" {...props}>
       <SidebarHeader>
-        <img
-          src={window.innerWidth < 768 ? OpenSidebarLogo : isCollapsed ? CollapsedSidebarLogo : OpenSidebarLogo}
-          alt={isCollapsed ? "Collapsed Logo" : "Open Logo"}
-          style={{
-            width: window.innerWidth < 768 ? "70%" : isCollapsed ? "50px" : "70%",
-            height: "auto",
-            marginTop: "4px",
-            marginLeft: "2px",
-          }}
-        />
+        <Link to="/">
+          <img
+            src={
+              window.innerWidth < 768
+                ? OpenSidebarLogo
+                : isCollapsed
+                ? CollapsedSidebarLogo
+                : OpenSidebarLogo
+            }
+            alt={isCollapsed ? "Collapsed Logo" : "Open Logo"}
+            style={{
+              width:
+                window.innerWidth < 768 ? "70%" : isCollapsed ? "50px" : "70%",
+              height: "auto",
+              marginTop: "4px",
+              marginLeft: "2px",
+            }}
+            onContextMenu={(e) => e.preventDefault()} // Prevent right-click
+          />
+        </Link>
       </SidebarHeader>
       <SidebarContent style={{ marginTop: "5px" }}>
         <NavMain items={data.navMain} />

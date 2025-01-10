@@ -1,7 +1,7 @@
 "use client";
 
+import { Link } from "react-router-dom";
 import { type LucideIcon } from "lucide-react";
-
 import {
   SidebarGroup,
   SidebarMenu,
@@ -23,21 +23,29 @@ export function NavMain({
     <SidebarGroup>
       <SidebarMenu>
         {items.map((item) => (
-          <SidebarMenuItem
-            key={item.title}
-            style={{
-              marginBottom: "8px", // Add spacing between each menu item
-            }}
-          >
-            <SidebarMenuButton tooltip={item.title}>
-              {item.icon && (
-                <item.icon
-                  style={{ width: "17px", height: "17px", marginRight: "2px" }}
-                />
-              )}
-              <span>{item.title}</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
+          <Link to={item.url}>
+            <SidebarMenuItem
+              key={item.title}
+              style={{
+                marginBottom: "8px",
+              }}
+            >
+              <SidebarMenuButton tooltip={item.title}>
+                {item.icon && (
+                  <item.icon
+                    style={{
+                      width: "17px",
+                      height: "17px",
+                      marginRight: "2px",
+                    }}
+                  />
+                )}
+                <Link to={item.url}>
+                  <span>{item.title}</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </Link>
         ))}
       </SidebarMenu>
     </SidebarGroup>
