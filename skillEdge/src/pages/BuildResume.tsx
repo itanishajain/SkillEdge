@@ -6,7 +6,7 @@ const BuildResume = () => {
           <p className="text-xl text-muted-foreground text-center mt-4">
             Start building your resume using AI.
           </p>
-          {/* Add your scan resume functionality here */}
+          
         </div>
       </div>
     );
