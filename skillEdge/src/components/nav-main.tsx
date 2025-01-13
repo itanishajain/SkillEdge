@@ -1,7 +1,7 @@
 "use client";
 
-import { Link } from "react-router-dom";
 import { type LucideIcon } from "lucide-react";
+import { Link } from "react-router-dom";
 import {
   SidebarGroup,
   SidebarMenu,
@@ -11,6 +11,7 @@ import {
 
 export function NavMain({
   items,
+  onLinkClick,
 }: {
   items: {
     title: string;
@@ -18,14 +19,14 @@ export function NavMain({
     icon?: LucideIcon;
     isActive?: boolean;
   }[];
+  onLinkClick: () => void;
 }) {
   return (
     <SidebarGroup>
       <SidebarMenu>
         {items.map((item) => (
-          <Link to={item.url}>
+          <Link to={item.url} key={item.title} onClick={onLinkClick}>
             <SidebarMenuItem
-              key={item.title}
               style={{
                 marginBottom: "8px",
               }}
@@ -34,15 +35,13 @@ export function NavMain({
                 {item.icon && (
                   <item.icon
                     style={{
-                      width: "17px",
-                      height: "17px",
-                      marginRight: "2px",
+                      width: "19px",
+                      height: "19px",
+                      marginRight: "12px",
                     }}
                   />
                 )}
-                <Link to={item.url}>
-                  <span>{item.title}</span>
-                </Link>
+                <span>{item.title}</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </Link>
@@ -51,3 +50,5 @@ export function NavMain({
     </SidebarGroup>
   );
 }
+
+

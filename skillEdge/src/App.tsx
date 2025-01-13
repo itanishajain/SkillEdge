@@ -14,6 +14,10 @@ import Blog from "@/pages/Blog";
 import FAQ from "@/pages/FAQ";
 import Documentation from "@/pages/Documentation";
 import HelpFeedback from "@/pages/HelpFeedback";
+import ScanResume from "./pages/ScanResume";
+import BuildResume from "./pages/BuildResume";
+
+
 
 export default function App() {
   return (
@@ -26,7 +30,7 @@ export default function App() {
               <SidebarTrigger className="-ml-1 md:hidden" />
             </div>
           </header>
-          <main style={{ marginLeft: "250px", padding: "20px" }}> {/* Adjust for sidebar width */}
+          <main style={{ padding: "20px" }}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/resume-template" element={<ResumeTemplate />} />
@@ -35,6 +39,10 @@ export default function App() {
               <Route path="/faq" element={<FAQ />} />
               <Route path="/documentation" element={<Documentation />} />
               <Route path="/help-feedback" element={<HelpFeedback />} />
+              
+              {/* Add route for ScanResume */}
+              <Route path="/scanresume" element={<ScanResume />} />
+              <Route path="/buildresume" element={<BuildResume />} />
             </Routes>
           </main>
         </SidebarInset>

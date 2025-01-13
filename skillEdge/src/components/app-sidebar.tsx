@@ -30,8 +30,8 @@ import { Link } from "react-router-dom";
 
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
+    name: "Skill Edge",
+    email: "skilledge@gmail.com",
     avatar: "/avatars/shadcn.jpg",
   },
   navMain: [
@@ -120,6 +120,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     };
   }, []);
 
+  // Function to handle link click and collapse sidebar on small screens
+  const handleLinkClick = () => {
+    if (window.innerWidth < 768 && sidebarRef.current) {
+      // Add the "collapsed" class to the sidebar
+      sidebarRef.current.classList.add("collapsed");
+    }
+  };
+
   return (
     <Sidebar ref={sidebarRef} collapsible="icon" {...props}>
       <SidebarHeader>
@@ -145,7 +153,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </Link>
       </SidebarHeader>
       <SidebarContent style={{ marginTop: "5px" }}>
-        <NavMain items={data.navMain} />
+        <NavMain items={data.navMain} onLinkClick={handleLinkClick} />
         {/* <NavProjects projects={data.projects} /> */}
       </SidebarContent>
       <SidebarFooter>
@@ -155,3 +163,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     </Sidebar>
   );
 }
+
+

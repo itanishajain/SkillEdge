@@ -75,13 +75,233 @@
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
-
-  /* Global application styles */
   * {
     @apply border-border;
   }
 
   body {
-    @apply bg-background text-foreground;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(135deg, #2c003e, #000000);
+    color: #fff;
+    position: relative;
+    overflow-x: hidden;
   }
+
+  body::before,
+  body::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50px; /* Adjust the width as needed */
+    background: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  body::before {
+    left: 0;
+  }
+
+  body::after {
+    right: 0;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(to right, #FF6B6B, #4ECDC4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .card-hover {
+    transition: all 0.3s ease;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-10px);
+  }
+
+  .container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  @media (min-width: 576px) {
+    .container {
+      max-width: 540px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .container {
+      max-width: 720px;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .container {
+      max-width: 960px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .container {
+      max-width: 1140px;
+    }
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+
+  .col {
+    flex: 1 0 0%;
+    max-width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  @media (min-width: 576px) {
+    .col-sm {
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .col-md {
+      flex: 0 0 33.333333%;
+      max-width: 33.333333%;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .col-lg {
+      flex: 0 0 25%;
+      max-width: 25%;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .col-xl {
+      flex: 0 0 20%;
+      max-width: 20%;
+    }
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  @media (min-width: 576px) {
+    h1 {
+      font-size: 3rem;
+    }
+  }
+
+  @media (min-width: 768px) {
+    h1 {
+      font-size: 3.5rem;
+    }
+  }
+
+  @media (min-width: 992px) {
+    h1 {
+      font-size: 4rem;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    h1 {
+      font-size: 4.5rem;
+    }
+  }
+
+  .features-description {
+    @apply text-lg text-gray-400 max-w-full mx-auto px-4;
+  }
+
+  .features-grid {
+    @apply grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4;
+  }
+
+  .feature-card {
+    @apply p-4 md:p-8 rounded-2xl bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all card-hover;
+  }
+
+  .feature-icon {
+    @apply w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center mb-4 md:mb-6;
+  }
+
+  .feature-title {
+    @apply text-lg md:text-xl font-semibold mb-2 md:mb-3;
+  }
+
+  .feature-description {
+    @apply text-gray-400;
+  }
+
+  .template-gallery {
+    @apply py-16 md:py-32 relative bg-gradient-to-b from-transparent via-white/5 to-transparent;
+  }
+
+  @media (max-width: 768px) {
+    .template-gallery {
+      @apply py-16;
+    }
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes slide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes slide-rtl {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-slide {
+  animation: slide 30s linear infinite;
+}
+
+.animate-slide-rtl {
+  animation: slide-rtl 30s linear infinite;
+}
+
+.blog-container:hover .animate-slide {
+  animation-play-state: paused;
 }
