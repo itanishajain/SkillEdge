@@ -108,7 +108,9 @@ function Home() {
   };
   return (
     <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900/20 via-background to-background"></div>
+    {/* <div> */}
+      <div className="inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900/20 via-background to-background"></div>
+      {/* <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900/20 via-background to-background"></div> */}
       <div className="absolute inset-0 noise-bg"></div>
 
       {/* Hero Section */}
@@ -146,7 +148,7 @@ function Home() {
                 <Button
                   size="lg"
                   variant="secondary"
-                  className="h-14 px-8 text-lg"
+                  className="h-14 px-8 text-lg border border-gray-500"
                   onClick={handleScanResumeClick}
                 >
                   Scan Resume
@@ -304,7 +306,11 @@ function Home() {
                   Join thousands of professionals who've landed their dream jobs
                   using Skilledge
                 </p>
-                <Button size="lg" className="h-14 px-12 text-lg">
+                <Button
+                 size="lg" 
+                 className="h-14 px-12 text-lg"
+                 onClick={handleBuildResumeClick}
+                >
                   Get Started Now
                   <ChevronRight className="w-6 h-6 ml-2" />
                 </Button>

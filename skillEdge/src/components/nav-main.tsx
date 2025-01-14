@@ -35,9 +35,9 @@ export function NavMain({
                 {item.icon && (
                   <item.icon
                     style={{
-                      width: "19px",
-                      height: "19px",
-                      marginRight: "12px",
+                      width: "18px",
+                      height: "18px",
+                      marginRight: "8px",
                     }}
                   />
                 )}
