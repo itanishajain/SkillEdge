@@ -30,7 +30,7 @@ export default function App() {
               <SidebarTrigger className="-ml-1 md:hidden" />
             </div>
           </header>
-          <main style={{ padding: "20px" }}>
+          <main>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/resume-template" element={<ResumeTemplate />} />

@@ -73,6 +73,7 @@ img {
   animation: float 6s ease-in-out infinite;
 }
 
+
 @keyframes slide {
   0% {
     transform: translateX(0);

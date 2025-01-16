@@ -17,6 +17,9 @@ import { Card, CardContent } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 
+import heroImage from "@/img/home/homeBehind.svg";
+import newImage from "@/img/home/overimg.svg";
+
 const templates = [
   {
     id: "1",
@@ -107,7 +110,8 @@ function Home() {
     navigate("/scanresume");
   };
   return (
-    <div className="min-h-screen bg-background text-foreground relative overflow-hidden">
+    <div className="overflow-hidden">
+    {/* <div> */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900/20 via-background to-background"></div>
       <div className="absolute inset-0 noise-bg"></div>
 
@@ -123,7 +127,7 @@ function Home() {
                 </Badge>
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight tracking-tight">
                   Build Your{" "}
-                  <span className="text-purple-500">Perfect Resume</span> With
+                  <span className="shining-text">Perfect Resume</span> With
                   AI
                 </h1>
                 <p className="text-lg sm:text-xl text-muted-foreground max-w-xl">
@@ -146,7 +150,8 @@ function Home() {
                 <Button
                   size="lg"
                   variant="secondary"
-                  className="h-14 px-8 text-lg"
+                  // className="h-14 px-8 text-lg border border-gray-500"
+                  className="h-14 px-8 text-lg border"
                   onClick={handleScanResumeClick}
                 >
                   Scan Resume
@@ -168,9 +173,16 @@ function Home() {
             <div className="relative hidden lg:block">
               <div className="absolute inset-0 bg-gradient-radial from-purple-500/20 to-transparent"></div>
               <img
-                src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&q=80&w=600"
+                src={heroImage}
                 alt="Resume Preview"
-                className="rounded-2xl shadow-2xl animate-float"
+                className="rounded-2xl ml-12 w-full h-full"
+                onContextMenu={(e) => e.preventDefault()}
+              />
+              <img
+                src={newImage}
+                alt="New Image"
+                className="absolute top-14 left-24 w-4/5 h-auto animate-float"
+                onContextMenu={(e) => e.preventDefault()}
               />
             </div>
           </div>
@@ -304,7 +316,11 @@ function Home() {
                   Join thousands of professionals who've landed their dream jobs
                   using Skilledge
                 </p>
-                <Button size="lg" className="h-14 px-12 text-lg">
+                <Button
+                 size="lg" 
+                 className="h-14 px-12 text-lg"
+                 onClick={handleBuildResumeClick}
+                >
                   Get Started Now
                   <ChevronRight className="w-6 h-6 ml-2" />
                 </Button>
