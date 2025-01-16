@@ -7,7 +7,7 @@ import {
   HeartHandshake,
   House,
   Map,
-  MessageCircleQuestion,
+  // MessageCircleQuestion,
   PieChart,
   ScrollText,
 } from "lucide-react";
@@ -56,18 +56,18 @@ const data = {
       url: "/blog",
       icon: Bold,
     },
-    {
-      title: "FAQ",
-      url: "/faq",
-      icon: MessageCircleQuestion,
-    },
+    // {
+    //   title: "FAQ",
+    //   url: "/faq",
+    //   icon: MessageCircleQuestion,
+    // },
     {
       title: "Documentation",
       url: "/documentation",
       icon: BookOpen,
     },
     {
-      title: "Help & Feedback",
+      title: "Help & Support",
       url: "/help-feedback",
       icon: HeartHandshake,
     },
