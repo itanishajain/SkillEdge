@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AppSidebar } from "@/components/app-sidebar";
 import {
   SidebarInset,
@@ -15,7 +15,7 @@ import FAQ from "@/pages/FAQ";
 import Documentation from "@/pages/Documentation";
 import HelpFeedback from "@/pages/HelpFeedback";
 import ScanResume from "./pages/ScanResume";
-import BuildResume from "./pages/BuildResume";
+import {BuildResume} from "./pages/BuildResume";
 
 
 
