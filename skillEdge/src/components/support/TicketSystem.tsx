@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDropzone } from 'react-dropzone';
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -18,6 +19,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import { SupportTicket } from "@/types/support";
 import {
   Table,
   TableBody,
@@ -28,35 +30,102 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { SupportTicket } from "@/types/support";
+import { motion, AnimatePresence } from "framer-motion";
+import { Upload, X, Image as ImageIcon } from "lucide-react";
+
+interface FileWithPreview extends File {
+  preview?: string;
+}
 
 export function TicketSystem() {
   const [tickets, setTickets] = useState<SupportTicket[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [files, setFiles] = useState<FileWithPreview[]>([]);
 
-  const createTicket = (data: Partial<SupportTicket>) => {
-    const newTicket: SupportTicket = {
-      id: Math.random().toString(36).substr(2, 9),
-      subject: data.subject || "",
-      description: data.description || "",
-      status: "open",
-      priority: data.priority || "medium",
-      createdAt: new Date(),
-    };
-    setTickets([newTicket, ...tickets]);
-    setIsOpen(false);
-    toast.success("Ticket created successfully!", {
-      description: `Ticket #${newTicket.id} has been created and assigned to our support team.`,
-    });
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: {
+      'image/*': ['.png', '.jpg', '.jpeg', '.gif']
+    },
+    onDrop: (acceptedFiles) => {
+      const filesWithPreview = acceptedFiles.map(file => 
+        Object.assign(file, {
+          preview: URL.createObjectURL(file)
+        })
+      );
+      setFiles(prev => [...prev, ...filesWithPreview]);
+    }
+  });
+
+  const removeFile = (file: FileWithPreview) => {
+    setFiles(files.filter(f => f !== file));
+    if (file.preview) {
+      URL.revokeObjectURL(file.preview);
+    }
   };
 
-  const updateTicketStatus = (ticketId: string, newStatus: SupportTicket['status']) => {
-    setTickets(tickets.map(ticket => 
-      ticket.id === ticketId 
-        ? { ...ticket, status: newStatus }
-        : ticket
-    ));
-    toast.success("Ticket status updated successfully!");
+  const createTicket = async (data: FormData) => {
+    const ticketData = {
+      id: Math.random().toString(36).substr(2, 9),
+      subject: data.get('subject') as string,
+      description: data.get('description') as string,
+      status: "open" as const,
+      priority: data.get('priority') as "low" | "medium" | "high",
+      createdAt: new Date(),
+      attachments: files
+    };
+
+    // Send email notification
+    try {
+      const response = await fetch('/api/send-ticket-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(ticketData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send email notification');
+      }
+
+      setTickets([ticketData, ...tickets]);
+      setIsOpen(false);
+      setFiles([]);
+      
+      toast.success("Ticket created successfully!", {
+        description: `Ticket #${ticketData.id} has been created and our team has been notified.`,
+      });
+    } catch {
+      toast.error("Failed to create ticket", {
+        description: "Please try again or contact support directly.",
+      });
+    }
+  };
+
+  const updateTicketStatus = async (ticketId: string, newStatus: SupportTicket['status']) => {
+    try {
+      const response = await fetch('/api/update-ticket-status', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ticketId, status: newStatus }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update ticket status');
+      }
+
+      setTickets(tickets.map(ticket => 
+        ticket.id === ticketId 
+          ? { ...ticket, status: newStatus }
+          : ticket
+      ));
+      
+      toast.success("Ticket status updated successfully!");
+    } catch {
+      toast.error("Failed to update ticket status");
+    }
   };
 
   return (
@@ -70,7 +139,7 @@ export function TicketSystem() {
           <DialogTrigger asChild>
             <Button>Create New Ticket</Button>
           </DialogTrigger>
-          <DialogContent className="bg-black text-white">
+          <DialogContent className="sm:max-w-[600px] bg-black border-gray-800">
             <DialogHeader>
               <DialogTitle>Create Support Ticket</DialogTitle>
               <DialogDescription className="text-gray-400">
@@ -81,11 +150,7 @@ export function TicketSystem() {
               onSubmit={(e) => {
                 e.preventDefault();
                 const formData = new FormData(e.currentTarget);
-                createTicket({
-                  subject: formData.get("subject") as string,
-                  description: formData.get("description") as string,
-                  priority: formData.get("priority") as "low" | "medium" | "high",
-                });
+                createTicket(formData);
               }}
               className="space-y-4"
             >
@@ -114,6 +179,48 @@ export function TicketSystem() {
                   </SelectContent>
                 </Select>
               </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Attachments</label>
+                <div 
+                  {...getRootProps()} 
+                  className="border-2 border-dashed border-gray-700 rounded-lg p-4 text-center cursor-pointer hover:border-gray-500 transition-colors"
+                >
+                  <input {...getInputProps()} />
+                  <Upload className="w-8 h-8 mx-auto mb-2 text-gray-400" />
+                  <p className="text-sm text-gray-400">
+                    Drag & drop images here, or click to select files
+                  </p>
+                </div>
+
+                {files.length > 0 && (
+                  <div className="mt-4 space-y-2">
+                    <AnimatePresence>
+                      {files.map((file) => (
+                        <motion.div
+                          key={file.name}
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          className="flex items-center gap-2 bg-secondary/20 rounded-lg p-2"
+                        >
+                          <ImageIcon className="w-4 h-4 text-gray-400" />
+                          <span className="text-sm truncate flex-1">{file.name}</span>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => removeFile(file)}
+                            className="h-6 w-6"
+                          >
+                            <X className="w-4 h-4" />
+                          </Button>
+                        </motion.div>
+                      ))}
+                    </AnimatePresence>
+                  </div>
+                )}
+              </div>
+
               <Button type="submit" className="w-full">
                 Submit Ticket
               </Button>
@@ -123,7 +230,7 @@ export function TicketSystem() {
       </div>
 
       <div className="border border-gray-800 rounded-lg overflow-hidden">
-        <ScrollArea className="max-h-[500px]">
+        <ScrollArea className="h-[400px]">
           <Table>
             <TableHeader>
               <TableRow className="hover:bg-secondary/5">
