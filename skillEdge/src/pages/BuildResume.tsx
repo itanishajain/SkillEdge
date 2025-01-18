@@ -6,13 +6,11 @@ import { Download, Wand2, Sun, Moon, AlertCircle } from 'lucide-react';
 import html2pdf from 'html2pdf.js';
 import OpenAI from 'openai';
 
-// Initialize OpenAI client only if API key is available
-const openaiClient = import.meta.env.VITE_OPENAI_API_KEY 
-  ? new OpenAI({
-      apiKey: import.meta.env.VITE_OPENAI_API_KEY,
-      dangerouslyAllowBrowser: true
-    })
-  : null;
+// Initialize OpenAI client
+const openaiClient = new OpenAI({
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+  dangerouslyAllowBrowser: true
+});
 
 interface ResumeData {
   basics: {
@@ -121,9 +119,11 @@ export const BuildResume: React.FC = () => {
   const [selectedTemplate, setSelectedTemplate] = useState('modern');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [textToImprove, setTextToImprove] = useState<string>('');  
 
   const handleEditorChange = useCallback((value: string) => {
     setEditorContent(value);
+    setTextToImprove(value); // Update textToImprove when editor content changes
     try {
       const parsed = JSON.parse(value);
       setPreviewData(parsed);
@@ -133,48 +133,81 @@ export const BuildResume: React.FC = () => {
   }, []);
 
   const handleGetSuggestions = useCallback(async () => {
-    if (!openaiClient) {
-      setError('OpenAI API key is not configured. Please add VITE_OPENAI_API_KEY to your environment variables.');
+    if (!import.meta.env.VITE_OPENAI_API_KEY) {
+      setError('OpenAI API key is not configured. Please check your environment variables.');
       return;
     }
-
     setIsLoading(true);
     setError(null);
     
     try {
+      const selection = window.getSelection()?.toString() || ''; 
+      
+      // Use `textToImprove` instead of creating a new variable
+      const textToImproveToUse = selection || textToImprove; // Using the state variable
+
+      const isPartialSelection = selection !== '';
+
+      // Construct the prompt with the selected text or the full resume content
+      const prompt = isPartialSelection
+        ? `Improve this resume section with more impactful descriptions: ${textToImproveToUse}`
+        : `Improve this resume with more impactful descriptions and achievements. Return the improved JSON in the exact same format: ${JSON.stringify(previewData)}`;
+      // Proceed with your API call using the constructed prompt
+      // e.g., call your AI suggestion API here
+
+      console.log('Generated Prompt:', prompt);
       const response = await openaiClient.chat.completions.create({
         model: "gpt-3.5-turbo",
         messages: [
           {
             role: "system",
-            content: `You are a professional resume writer. Analyze the resume and provide specific, actionable improvements. 
-                     Return ONLY the improved JSON resume in the exact same format, with no additional text or explanations.`
+            content: isPartialSelection
+            ? "You are a professional resume writer. Improve the selected text to be more impactful and professional. Return only the improved text."
+            : "You are a professional resume writer. Analyze the resume and provide specific, actionable improvements. Return ONLY the improved JSON resume in the exact same format."
           },
           {
             role: "user",
-            content: `Improve this resume with more impactful descriptions and achievements: ${JSON.stringify(previewData)}`
+            content: prompt
           }
         ]
       });
 
       const suggestions = response.choices[0]?.message?.content;
       if (suggestions) {
-        try {
-          // Attempt to parse the response as JSON
-          const parsedSuggestions = JSON.parse(suggestions);
-          setEditorContent(JSON.stringify(parsedSuggestions, null, 2));
-          setPreviewData(parsedSuggestions);
-        } catch (e) {
-          setError('Received invalid JSON from AI. Please try again.');
+        if (isPartialSelection) {
+          // If it's a partial selection, update just that part in the editor
+          const newContent = editorContent.replace(selection, suggestions);
+          setEditorContent(newContent);
+          try {
+            const parsed = JSON.parse(newContent);
+            setPreviewData(parsed);
+          } catch (e) {
+            setError('Failed to parse the updated JSON. Please check the format.');
+          } 
+        }
+
+        else {
+          try {
+            // If it's the full resume, update everything
+            const parsedSuggestions = JSON.parse(suggestions);
+            setEditorContent(JSON.stringify(parsedSuggestions, null, 2));
+            setPreviewData(parsedSuggestions);
+          } catch (e) {
+            setError('Received invalid JSON from AI. Please try again.');
+          }
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error getting AI suggestions:', error);
-      setError('Failed to get AI suggestions. Please try again later.');
+      if (error?.message?.includes('429')) {
+        setError('API rate limit exceeded. Please check your OpenAI account billing status or try again later.');
+      } else {
+        setError(error?.message || 'Failed to get AI suggestions. Please try again later.');
+      }
     } finally {
       setIsLoading(false);
     }
-  }, [previewData]);
+  }, [previewData,textToImprove]);
 
   const handleDownload = useCallback(async () => {
     const element = document.getElementById('resume-preview');
@@ -215,7 +248,7 @@ export const BuildResume: React.FC = () => {
   const currentTemplate = templates[selectedTemplate as keyof typeof templates];
 
   return (
-    <div className={`flex h-screen ${isDarkMode ? 'bg-gray-900' : 'bg-gray-100'}`}>
+    <div className={`flex h-screen ${isDarkMode ? 'dark bg-gray-900' : 'bg-gray-100'}`}>
       {/* Editor Section */}
       <div className="w-1/2 border-r border-gray-700">
         <div className={`h-full flex flex-col ${isDarkMode ? 'bg-gray-900' : 'bg-white'}`}>
@@ -227,14 +260,24 @@ export const BuildResume: React.FC = () => {
               <div className="flex gap-2">
                 <button
                   onClick={toggleTheme}
-                  className="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700"
+                  className={`p-2 rounded-md ${
+                    isDarkMode 
+                      ? 'hover:bg-gray-700 text-white' 
+                      : 'hover:bg-gray-200 text-gray-900'
+                  }`}
                 >
                   {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
                 </button>
                 <select
-                  value={selectedTemplate}
+                  value={editorContent}
                   onChange={(e) => setSelectedTemplate(e.target.value)}
-                  className="px-3 py-1 rounded-md bg-gray-100 dark:bg-gray-800"
+                  
+                  
+                  className={`px-3 py-1 rounded-md ${
+                    isDarkMode 
+                      ? 'bg-gray-800 text-white border-gray-700' 
+                      : 'bg-gray-100 text-gray-900 border-gray-200'
+                  } border`}
                 >
                   <option value="modern">Modern Template</option>
                   <option value="classic">Classic Template</option>
@@ -242,8 +285,16 @@ export const BuildResume: React.FC = () => {
                 </select>
                 <button
                   onClick={handleGetSuggestions}
-                  disabled={isLoading || !openaiClient}
-                  className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors disabled:opacity-50"
+                  disabled={isLoading}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-md transition-colors ${
+                    isLoading
+                      ? 'opacity-50 cursor-not-allowed'
+                      : 'hover:bg-indigo-700'
+                  } ${
+                    isDarkMode
+                      ? 'bg-indigo-600 text-white'
+                      : 'bg-indigo-600 text-white'
+                  }`}
                 >
                   <Wand2 size={18} />
                   {isLoading ? 'Getting Suggestions...' : 'Get AI Suggestions'}
@@ -251,7 +302,15 @@ export const BuildResume: React.FC = () => {
                 <button
                   onClick={handleDownload}
                   disabled={isGeneratingPDF}
-                  className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors disabled:opacity-50"
+                  className={`flex items-center gap-2 px-4 py-2 rounded-md transition-colors ${
+                    isGeneratingPDF
+                      ? 'opacity-50 cursor-not-allowed'
+                      : 'hover:bg-green-700'
+                  } ${
+                    isDarkMode
+                      ? 'bg-green-600 text-white'
+                      : 'bg-green-600 text-white'
+                  }`}
                 >
                   <Download size={18} />
                   {isGeneratingPDF ? 'Generating PDF...' : 'Download PDF'}
@@ -259,7 +318,7 @@ export const BuildResume: React.FC = () => {
               </div>
             </div>
             {error && (
-              <div className="flex items-center gap-2 p-2 mt-2 text-red-600 bg-red-100 rounded-md">
+              <div className="flex items-center gap-2 p-2 mt-2 text-red-600 bg-red-100 dark:bg-red-900 dark:text-red-200 rounded-md">
                 <AlertCircle size={18} />
                 <span>{error}</span>
               </div>

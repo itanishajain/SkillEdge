@@ -19,30 +19,34 @@ import { useNavigate } from "react-router-dom";
 
 import heroImage from "@/img/home/homeBehind.svg";
 import newImage from "@/img/home/overimg.svg";
+import footerlogo from "@/img/SkillEdgeLogo.svg";
+import TimelineFeature from "./TimelineFeature";
+import Catagories from "./Catagories";
+// import Toolstip from "./Toolstip";
 
-const templates = [
-  {
-    id: "1",
-    imageUrl:
-      "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&q=80&w=600",
-    name: "Modern Professional",
-    category: "Corporate",
-  },
-  {
-    id: "2",
-    imageUrl:
-      "https://images.unsplash.com/photo-1626197031507-c17099753214?auto=format&fit=crop&q=80&w=600",
-    name: "Creative Portfolio",
-    category: "Creative",
-  },
-  {
-    id: "3",
-    imageUrl:
-      "https://images.unsplash.com/photo-1586282391129-76a6df230234?auto=format&fit=crop&q=80&w=600",
-    name: "Executive Brief",
-    category: "Executive",
-  },
-];
+// const templates = [
+//   {
+//     id: "1",
+//     imageUrl:
+//       "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&q=80&w=600",
+//     name: "Modern Professional",
+//     category: "Corporate",
+//   },
+//   {
+//     id: "2",
+//     imageUrl:
+//       "https://images.unsplash.com/photo-1626197031507-c17099753214?auto=format&fit=crop&q=80&w=600",
+//     name: "Creative Portfolio",
+//     category: "Creative",
+//   },
+//   {
+//     id: "3",
+//     imageUrl:
+//       "https://images.unsplash.com/photo-1586282391129-76a6df230234?auto=format&fit=crop&q=80&w=600",
+//     name: "Executive Brief",
+//     category: "Executive",
+//   },
+// ];
 
 const features = [
   {
@@ -110,11 +114,10 @@ function Home() {
     navigate("/scanresume");
   };
   return (
-    <div className="overflow-hidden">
-    {/* <div> */}
+    <div className="">
+      {/* <div> */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900/20 via-background to-background"></div>
       <div className="absolute inset-0 noise-bg"></div>
-
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center px-4 py-20 lg:py-32">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
@@ -127,25 +130,21 @@ function Home() {
                 </Badge>
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight tracking-tight">
                   Build Your{" "}
-                  <span className="shining-text">Perfect Resume</span> With
-                  AI
+                  <span className="shining-text">Perfect Resume</span> With AI
                 </h1>
                 <p className="text-lg sm:text-xl text-muted-foreground max-w-xl">
                   Transform your career journey into a compelling story with
                   SkillEdge.
                 </p>
               </div>
-
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button
-                 size="lg" 
-                 className="h-14 px-8 text-lg"
-                 onClick={handleBuildResumeClick}
+                  size="lg"
+                  className="h-14 px-8 text-lg"
+                  onClick={handleBuildResumeClick}
                 >
                   Start Building
-                  <ArrowRight
-                   className="w-5 h-5 ml-2" 
-                  />
+                  <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
                 <Button
                   size="lg"
@@ -157,7 +156,6 @@ function Home() {
                   Scan Resume
                 </Button>
               </div>
-
               <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
                 {["AI-Powered", "ATS-Friendly", "LaTeX Templates"].map(
                   (feature) => (
@@ -189,13 +187,16 @@ function Home() {
         </div>
       </section>
 
+      {/* Timeline Feature */}
+      <section>
+        <TimelineFeature/>
+      </section>
+
       {/* Features Section */}
       <section className="py-32 relative">
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="text-center mb-16 space-y-4">
-            <h2 className="text-4xl lg:text-5xl font-bold">
-              Powerful Features
-            </h2>
+            <h2 className="text-4xl lg:text-5xl font-bold">Features</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Everything you need to create a professional resume that stands
               out
@@ -224,7 +225,7 @@ function Home() {
       <section className="py-32 relative">
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="text-center mb-16 space-y-4">
-            <h2 className="text-4xl lg:text-5xl font-bold">
+            <h2 className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-white to-purple-900 bg-clip-text text-transparent uppercase">
               Premium Templates
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -232,7 +233,7 @@ function Home() {
               templates
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {templates.map((template) => (
               <Card
                 key={template.id}
@@ -257,7 +258,8 @@ function Home() {
                 </CardContent>
               </Card>
             ))}
-          </div>
+          </div> */}
+          <Catagories/>
         </div>
       </section>
 
@@ -317,9 +319,9 @@ function Home() {
                   using Skilledge
                 </p>
                 <Button
-                 size="lg" 
-                 className="h-14 px-12 text-lg"
-                 onClick={handleBuildResumeClick}
+                  size="lg"
+                  className="h-14 px-12 text-lg"
+                  onClick={handleBuildResumeClick}
                 >
                   Get Started Now
                   <ChevronRight className="w-6 h-6 ml-2" />
@@ -332,10 +334,15 @@ function Home() {
 
       {/* Footer */}
       <footer className="py-20 relative border-t border-muted">
-        <div className="container mx-auto px-4 max-w-7xl">
+        <div className="container mx-auto px-4 py-10 max-w-7xl">
           <div className="grid md:grid-cols-4 gap-12">
             <div className="space-y-4">
-              <h3 className="text-2xl font-bold">Skilledge</h3>
+              <img
+                src={footerlogo}
+                alt="Footer Logo"
+                className="w-44 h-auto"
+                onContextMenu={(e) => e.preventDefault()}
+              />
               <p className="text-muted-foreground">
                 Building careers, one resume at a time.
               </p>

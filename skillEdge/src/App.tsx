@@ -13,9 +13,10 @@ import CoverLetter from "@/pages/CoverLetter";
 import Blog from "@/pages/Blog";
 import FAQ from "@/pages/FAQ";
 import Documentation from "@/pages/Documentation";
-import HelpFeedback from "@/pages/HelpFeedback";
 import ScanResume from "./pages/ScanResume";
-import {BuildResume} from "./pages/BuildResume";
+import BuildResume from "./pages/BuildResume";
+import HelpSupport from "./pages/HelpSupport";
+
 
 
 
@@ -38,7 +39,7 @@ export default function App() {
               <Route path="/blog" element={<Blog />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/documentation" element={<Documentation />} />
-              <Route path="/help-feedback" element={<HelpFeedback />} />
+              <Route path="/help-feedback" element={<HelpSupport />} />
               
               {/* Add route for ScanResume */}
               <Route path="/scanresume" element={<ScanResume />} />
