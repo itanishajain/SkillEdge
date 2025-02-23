@@ -127,7 +127,7 @@ export const BuildResume: React.FC = () => {
     try {
       const parsed = JSON.parse(value);
       setPreviewData(parsed);
-    } catch (e) {
+    } catch {
       // Handle parse errors silently
     }
   }, []);
@@ -181,7 +181,7 @@ export const BuildResume: React.FC = () => {
           try {
             const parsed = JSON.parse(newContent);
             setPreviewData(parsed);
-          } catch (e) {
+          } catch {
             setError('Failed to parse the updated JSON. Please check the format.');
           } 
         }
@@ -192,22 +192,22 @@ export const BuildResume: React.FC = () => {
             const parsedSuggestions = JSON.parse(suggestions);
             setEditorContent(JSON.stringify(parsedSuggestions, null, 2));
             setPreviewData(parsedSuggestions);
-          } catch (e) {
+          } catch {
             setError('Received invalid JSON from AI. Please try again.');
           }
         }
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error getting AI suggestions:', error);
-      if (error?.message?.includes('429')) {
+      if ((error as Error)?.message?.includes('429')) {
         setError('API rate limit exceeded. Please check your OpenAI account billing status or try again later.');
       } else {
-        setError(error?.message || 'Failed to get AI suggestions. Please try again later.');
+        setError((error as Error)?.message || 'Failed to get AI suggestions. Please try again later.');
       }
     } finally {
       setIsLoading(false);
     }
-  }, [previewData,textToImprove]);
+  }, [previewData, textToImprove, editorContent]);
 
   const handleDownload = useCallback(async () => {
     const element = document.getElementById('resume-preview');

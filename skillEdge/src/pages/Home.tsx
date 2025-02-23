@@ -104,7 +104,7 @@ const blogPosts = [
 ];
 
 function Home() {
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate(); 
 
   const handleBuildResumeClick = () => {
     navigate("/BuildResume");
