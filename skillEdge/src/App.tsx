@@ -23,6 +23,7 @@ import { SignIn } from "./pages/authentication/Signin";
 import { SignUp } from "./pages/authentication/Signup";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { Toaster } from "./components/ui/Toaster";
+import Profile from "./pages/Profile";
 
 // Import Toaster
 
@@ -62,6 +63,7 @@ export default function App() {
                         <Route path="/help-feedback" element={<HelpSupport />} />
                         <Route path="/scanresume" element={<ScanResume />} />
                         <Route path="/buildresume" element={<BuildResume />} />
+                        <Route path="/Profile" element={<Profile />} />
                       </Routes>
                     </main>
                   </SidebarInset>

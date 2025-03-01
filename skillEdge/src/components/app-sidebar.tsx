@@ -21,6 +21,7 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
+  SidebarSeparator,
 } from "@/components/ui/sidebar";
 
 // Import your images
@@ -152,6 +153,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           />
         </Link>
       </SidebarHeader>
+      {/* <hr style={{padding: "0 10px" }} /> */}
+      <SidebarSeparator/>
       <SidebarContent style={{ marginTop: "5px" }}>
         <NavMain items={data.navMain} onLinkClick={handleLinkClick} />
         {/* <NavProjects projects={data.projects} /> */}

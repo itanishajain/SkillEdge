@@ -83,16 +83,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  // Logout function
+  // Logout function with confirmation and redirection
   const logout = async () => {
     try {
       await signOut(auth);
       setUser(null);
       localStorage.removeItem("user");
+  
+      // Redirect user to login page (adjust path if needed)
+      window.location.href = "/login";
     } catch (error) {
       console.error("Logout failed", error);
     }
   };
+  
 
   return (
     <AuthContext.Provider value={{ user, loading, loginWithGoogle, loginWithEmail, logout }}>
