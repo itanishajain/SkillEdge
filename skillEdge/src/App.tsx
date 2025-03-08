@@ -24,6 +24,8 @@ import { SignUp } from "./pages/authentication/Signup";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { Toaster } from "./components/ui/Toaster";
 import Profile from "./pages/Profile";
+import RoadMap from "./pages/RoadMap";
+import Saved from "./pages/Saved";
 
 // Import Toaster
 
@@ -55,6 +57,7 @@ export default function App() {
                     <main>
                       <Routes>
                         <Route path="/" element={<Home />} />
+                        <Route path="/roadmap" element={<RoadMap />} />
                         <Route path="/resume-template" element={<ResumeTemplate />} />
                         <Route path="/cover-letter" element={<CoverLetter />} />
                         <Route path="/blog" element={<Blog />} />
@@ -64,6 +67,7 @@ export default function App() {
                         <Route path="/scanresume" element={<ScanResume />} />
                         <Route path="/buildresume" element={<BuildResume />} />
                         <Route path="/Profile" element={<Profile />} />
+                        <Route path="/saved" element={<Saved />} />
                       </Routes>
                     </main>
                   </SidebarInset>

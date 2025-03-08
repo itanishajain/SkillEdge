@@ -7,6 +7,7 @@ import {
   LogOut,
   // Sparkles,
   User,
+  Bookmark,
 } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -109,6 +110,10 @@ export function NavUser({
               <DropdownMenuItem onSelect={() => navigate("/Profile") }>
                 <User />
                 Profile
+              </DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => navigate("/Saved") }>
+                <Bookmark />
+                Saved
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <CreditCard />

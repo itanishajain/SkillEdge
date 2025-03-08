@@ -2,6 +2,7 @@ import * as React from "react";
 import {
   Bold,
   BookOpen,
+  Compass,
   FileText,
   Frame,
   HeartHandshake,
@@ -41,6 +42,11 @@ const data = {
       url: "/",
       icon: House,
       isActive: true,
+    },
+    {
+      title: "Roadmap",
+      url: "/roadmap",
+      icon: Compass,
     },
     {
       title: "Resume Template",
