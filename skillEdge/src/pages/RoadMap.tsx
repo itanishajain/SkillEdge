@@ -130,7 +130,7 @@ function RoadMap() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="sm:text-2xl md:text-5xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text uppercase"
           >
-            <span className="shining-text ">Developers RoadMap</span>
+            <span className="shining-text ">Learners RoadMap</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}

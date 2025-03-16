@@ -5,7 +5,6 @@ import {
   ChevronsUpDown,
   CreditCard,
   LogOut,
-  // Sparkles,
   User,
   Bookmark,
 } from "lucide-react";
@@ -37,22 +36,45 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-export function NavUser({
-  user,
-}: {
-  user: {
+export function NavUser() {
+  const { isMobile } = useSidebar();
+  const { logout } = useAuth();
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const [user, setUser] = useState<{
     name: string;
     email: string;
     avatar: string;
-  };
-}) {
-  const { isMobile } = useSidebar();
-  const { logout } = useAuth();
-  const [open, setOpen] = useState(false); 
-  const navigate = useNavigate();
+  }>({
+    name: "",
+    email: "",
+    avatar: "",
+  });
+
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+        await currentUser.reload(); // Refreshes the user data
+
+        const displayName =
+          currentUser.displayName || currentUser.email?.split("@")[0];
+        const email = currentUser.email || "";
+        const photoURL = currentUser.photoURL;
+
+        setUser({
+          name: displayName || "",
+          email: email,
+          avatar: photoURL ? photoURL : "", // Use the photoURL if available
+        });
+      }
+    });
+    return () => unsubscribe();
+  }, []);
 
   const handleLogout = async () => {
     await logout(); // Call logout function
@@ -69,8 +91,13 @@ export function NavUser({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                {user.avatar ? (
+                  <AvatarImage src={user.avatar} alt={user.name} />
+                ) : (
+                  <AvatarFallback className="rounded-lg">
+                    {user.email.charAt(0).toUpperCase()}
+                  </AvatarFallback>
+                )}
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{user.name}</span>
@@ -97,21 +124,13 @@ export function NavUser({
                 </div>
               </div>
             </DropdownMenuLabel>
-            {/* <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Sparkles />
-                Upgrade to Pro
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator /> */}
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem onSelect={() => navigate("/Profile") }>
+              <DropdownMenuItem onSelect={() => navigate("/Profile")}>
                 <User />
                 Profile
               </DropdownMenuItem>
-              <DropdownMenuItem onSelect={() => navigate("/Saved") }>
+              <DropdownMenuItem onSelect={() => navigate("/Saved")}>
                 <Bookmark />
                 Saved
               </DropdownMenuItem>
@@ -143,7 +162,7 @@ export function NavUser({
 
       {/* Logout Confirmation Dialog */}
       <AlertDialog open={open} onOpenChange={setOpen}>
-        <AlertDialogContent style={{border: "0.5px solid #00308F"}}>
+        <AlertDialogContent style={{ border: "0.5px solid #00308F" }}>
           <AlertDialogHeader>
             <AlertDialogTitle>Confirm Logout!</AlertDialogTitle>
             <AlertDialogDescription>

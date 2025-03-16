@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { AppSidebar } from "@/components/app-sidebar";
 import {
@@ -9,10 +10,8 @@ import {
 // Import all pages
 import Home from "@/pages/Home";
 import ResumeTemplate from "@/pages/ResumeTemplate";
-import CoverLetter from "@/pages/CoverLetter";
 import Blog from "@/pages/Blog";
 import FAQ from "@/pages/FAQ";
-import Documentation from "@/pages/Documentation";
 import ScanResume from "./pages/ScanResume";
 import BuildResume from "./pages/BuildResume";
 import HelpSupport from "./pages/HelpSupport";
@@ -26,14 +25,25 @@ import { Toaster } from "./components/ui/Toaster";
 import Profile from "./pages/Profile";
 import RoadMap from "./pages/RoadMap";
 import Saved from "./pages/Saved";
+import SkillX from "./pages/SkillX";
+import Notes from "@/pages/Notes";
+import Preloader from "./components/Preloader";
 
 // Import Toaster
 
-
 export default function App() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Preloader until the website is completely loaded
+    setLoading(false);
+  }, []);
+
+  if (loading) return <Preloader />;
+
   return (
     <AuthProvider>
-      <Toaster /> 
+      <Toaster />
       <Router>
         <Routes>
           {/* Public Authentication Routes */}
@@ -59,10 +69,10 @@ export default function App() {
                         <Route path="/" element={<Home />} />
                         <Route path="/roadmap" element={<RoadMap />} />
                         <Route path="/resume-template" element={<ResumeTemplate />} />
-                        <Route path="/cover-letter" element={<CoverLetter />} />
+                        <Route path="/skill-x" element={<SkillX />} />
                         <Route path="/blog" element={<Blog />} />
                         <Route path="/faq" element={<FAQ />} />
-                        <Route path="/documentation" element={<Documentation />} />
+                        <Route path="/notes" element={<Notes />} />
                         <Route path="/help-feedback" element={<HelpSupport />} />
                         <Route path="/scanresume" element={<ScanResume />} />
                         <Route path="/buildresume" element={<BuildResume />} />
@@ -85,7 +95,7 @@ export default function App() {
 const RequireAuth = ({ children }: { children: JSX.Element }) => {
   const { user, loading } = useAuth();
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Preloader />;
 
   return user ? children : <Navigate to="/signin" replace />;
 };

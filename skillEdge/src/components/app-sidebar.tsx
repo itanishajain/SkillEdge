@@ -10,7 +10,7 @@ import {
   Map,
   // MessageCircleQuestion,
   PieChart,
-  ScrollText,
+  Sparkles,
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
@@ -54,9 +54,9 @@ const data = {
       icon: FileText,
     },
     {
-      title: "Cover Letter",
-      url: "/cover-letter",
-      icon: ScrollText,
+      title: "Skill-X",
+      url: "/skill-x",
+      icon: Sparkles,
     },
     {
       title: "Blog",
@@ -69,8 +69,8 @@ const data = {
     //   icon: MessageCircleQuestion,
     // },
     {
-      title: "Documentation",
-      url: "/documentation",
+      title: "Notes",
+      url: "/notes",
       icon: BookOpen,
     },
     {
@@ -140,13 +140,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <Link to="/">
           <img
-            src={
-              window.innerWidth < 768
-                ? OpenSidebarLogo
-                : isCollapsed
-                ? CollapsedSidebarLogo
-                : OpenSidebarLogo
-            }
+            src={isCollapsed ? CollapsedSidebarLogo : OpenSidebarLogo}
+
             alt={isCollapsed ? "Collapsed Logo" : "Open Logo"}
             style={{
               width:
@@ -166,7 +161,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         {/* <NavProjects projects={data.projects} /> */}
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser/>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

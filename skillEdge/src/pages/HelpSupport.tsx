@@ -89,7 +89,7 @@ const HelpSupport: React.FC = () => {
                 >
                   <LifeBuoy className="w-12 h-12 text-white/80" />
                 </motion.div>
-                <h1 className="text-5xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-gray-200 to-gray-700 bg-clip-text text-transparent max-w-4xl">
+                <h1 className="text-5xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-gray-200 to-gray-700 bg-clip-text text-transparent max-w-4xl uppercase">
                   Help Center
                 </h1>
                 <p className="text-lg tracking-tight bg-gradient-to-r from-gray-400 to-purple-900 bg-clip-text text-transparent leading-relaxed">
