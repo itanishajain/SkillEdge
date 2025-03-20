@@ -13,7 +13,6 @@ import ResumeTemplate from "@/pages/ResumeTemplate";
 import Blog from "@/pages/Blog";
 import FAQ from "@/pages/FAQ";
 import ScanResume from "./pages/ScanResume";
-import BuildResume from "./pages/BuildResume";
 import HelpSupport from "./pages/HelpSupport";
 
 // Authentication Pages
@@ -28,6 +27,7 @@ import Saved from "./pages/Saved";
 import SkillX from "./pages/SkillX";
 import Notes from "@/pages/Notes";
 import Preloader from "./components/Preloader";
+import CareerPage from './pages/CareerPage';
 
 // Import Toaster
 
@@ -75,7 +75,7 @@ export default function App() {
                         <Route path="/notes" element={<Notes />} />
                         <Route path="/help-feedback" element={<HelpSupport />} />
                         <Route path="/scanresume" element={<ScanResume />} />
-                        <Route path="/buildresume" element={<BuildResume />} />
+                        <Route path="/career" element={<CareerPage />} />
                         <Route path="/Profile" element={<Profile />} />
                         <Route path="/saved" element={<Saved />} />
                       </Routes>
