@@ -4,7 +4,6 @@ import {
   Twitter,
   Linkedin,
   Mail,
-  User,
   ArrowRight,
   CheckCircle,
   Sparkles,
@@ -24,7 +23,7 @@ import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 
 import heroImage from "@/img/home/homeBehind.svg";
-import newImage from "@/img/home/overimg.svg";
+// import newImage from "@/img/home/SkillBot.svg";
 import footerlogo from "@/img/SkillEdgeLogo.svg";
 import TimelineFeature from "./TimelineFeature";
 import Catagories from "./Catagories";
@@ -111,36 +110,36 @@ const features = [
   },
 ];
 
-const blogPosts = [
-  {
-    id: "1",
-    imageUrl:
-      "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&q=80&w=600",
-    title: "Top Resume Trends for 2024",
-    author: "Sarah Johnson",
-    date: "Jan 15, 2024",
-    excerpt: "Discover the latest trends shaping successful resumes in 2024.",
-  },
-  {
-    id: "2",
-    imageUrl:
-      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=600",
-    title: "Mastering ATS Systems",
-    author: "Michael Chen",
-    date: "Jan 10, 2024",
-    excerpt:
-      "Learn how to optimize your resume for applicant tracking systems.",
-  },
-  {
-    id: "3",
-    imageUrl:
-      "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=600",
-    title: "AI in Resume Writing",
-    author: "Emily Parker",
-    date: "Jan 5, 2024",
-    excerpt: "How artificial intelligence is revolutionizing resume creation.",
-  },
-];
+// const blogPosts = [
+//   {
+//     id: "1",
+//     imageUrl:
+//       "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&q=80&w=600",
+//     title: "Top Resume Trends for 2024",
+//     author: "Sarah Johnson",
+//     date: "Jan 15, 2024",
+//     excerpt: "Discover the latest trends shaping successful resumes in 2024.",
+//   },
+//   {
+//     id: "2",
+//     imageUrl:
+//       "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=600",
+//     title: "Mastering ATS Systems",
+//     author: "Michael Chen",
+//     date: "Jan 10, 2024",
+//     excerpt:
+//       "Learn how to optimize your resume for applicant tracking systems.",
+//   },
+//   {
+//     id: "3",
+//     imageUrl:
+//       "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=600",
+//     title: "AI in Resume Writing",
+//     author: "Emily Parker",
+//     date: "Jan 5, 2024",
+//     excerpt: "How artificial intelligence is revolutionizing resume creation.",
+//   },
+// ];
 
 function Home() {
   const navigate = useNavigate();
@@ -153,7 +152,7 @@ function Home() {
     navigate("/roadmap");
   };
   return (
-    <div className="">
+    <div className="mt-6">
       {/* <div> */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900/20 via-background to-background"></div>
       <div className="absolute inset-0 noise-bg"></div>
@@ -223,8 +222,8 @@ function Home() {
                 onContextMenu={(e) => e.preventDefault()}
               />
               <img
-                src={newImage}
-                alt="Guided Learning"
+                // src={newImage}
+                // alt="Guided Learning"
                 className="absolute top-14 left-24 w-4/5 h-auto animate-float"
                 onContextMenu={(e) => e.preventDefault()}
               />
@@ -284,11 +283,11 @@ function Home() {
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="text-center mb-16 space-y-4">
             <h2 className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-white to-purple-900 bg-clip-text text-transparent uppercase">
-              Premium Templates
+              {/* Premium Templates */}
+              The Loopers
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Choose from our collection of professionally designed LaTeX
-              templates
+            A Team of innovative thinkers and passionate developers dedicated to building cutting-edge solutions. With a shared vision for creativity and excellence, Loopers strives to push boundaries and transform ideas into reality through collaboration and innovation.
             </p>
           </div>
           {/* <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -322,7 +321,7 @@ function Home() {
       </section>
 
       {/* Blog Section */}
-      <section className="py-32 relative">
+      {/* <section className="py-32 relative">
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="text-center mb-16 space-y-4">
             <h2 className="text-4xl lg:text-5xl font-bold">Latest Insights</h2>
@@ -360,7 +359,7 @@ function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* CTA Section */}
       <section className="py-32 relative">

@@ -46,30 +46,30 @@ function SkillX() {
           ENCRYPTION_KEY
         ).toString(CryptoJS.enc.Utf8);
         setApiKey(decrypted);
-      } catch (err) {
+      } catch {
         console.error("Failed to decrypt API key");
       }
     }
 
-    if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
-      recognition.current = new (window.SpeechRecognition ||
-        window.webkitSpeechRecognition)();
-      recognition.current.continuous = true;
-      recognition.current.interimResults = true;
+    // if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
+    //   recognition.current = new (window.SpeechRecognition ||
+    //     window.webkitSpeechRecognition)();
+    //   recognition.current.continuous = true;
+    //   recognition.current.interimResults = true;
 
-      recognition.current.onresult = (event) => {
-        const transcript = Array.from(event.results)
-          .map((result) => result[0])
-          .map((result) => result.transcript)
-          .join("");
-        setInput(transcript);
-      };
+    //   recognition.current.onresult = (event) => {
+    //     const transcript = Array.from(event.results)
+    //       .map((result) => result[0])
+    //       .map((result) => result.transcript)
+    //       .join("");
+    //     setInput(transcript);
+    //   };
 
-      recognition.current.onerror = (event) => {
-        console.error("Speech recognition error:", event.error);
-        setIsListening(false);
-      };
-    }
+    //   recognition.current.onerror = (event) => {
+    //     console.error("Speech recognition error:", event.error);
+    //     setIsListening(false);
+    //   };
+    // }
   }, []);
 
   useEffect(() => {
@@ -184,7 +184,7 @@ function SkillX() {
   };
 
   return (
-    <div>
+    <div className="mt-6">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900/20 via-background to-background"></div>
       <div className="absolute inset-0 noise-bg"></div>
       <motion.div

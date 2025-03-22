@@ -62,6 +62,7 @@ const supportTabs: SupportTab[] = [
 const HelpSupport: React.FC = () => {
   return (
     <>
+    <div className="mt-7">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900/20 via-background to-background"></div>
       <div className="absolute inset-0 noise-bg"></div>
       <div className="min-h-screen text-white">
@@ -195,6 +196,7 @@ const HelpSupport: React.FC = () => {
           </div>
         </div>
         <Toaster theme="dark" position="bottom-right" />
+      </div>
       </div>
     </>
   );

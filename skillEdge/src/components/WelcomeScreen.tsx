@@ -14,7 +14,7 @@ export const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ logo }) => {
           alt="Skilledge Logo"
           className="w-24 h-24 sm:w-32 sm:h-32 opacity-90"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900 pointer-events-none" />
+        {/* <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900 pointer-events-none" /> */}
       </div>
 
       <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4 uppercase">

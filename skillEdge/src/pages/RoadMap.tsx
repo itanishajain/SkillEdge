@@ -105,7 +105,7 @@ function RoadMap() {
   );
 
   return (
-    <div>
+    <div className="mt-6">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900/20 via-background to-background"></div>
       <div className="absolute inset-0 noise-bg"></div>
       <motion.div

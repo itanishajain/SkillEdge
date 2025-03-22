@@ -35,6 +35,7 @@ import { useCourseStore } from "@/store/courseStore";
 import { TimeStampNotes } from "@/components/TimeStampNotes";
 import { CourseProgressBadge } from "@/components/CourseProgress";
 import logo from "@/img/home/homeBehind.svg";
+import { Button } from "@/components/ui/button";
 
 function CareerPage() {
   const [selectedPath, setSelectedPath] = useState<LearningPath | null>(null);
@@ -126,7 +127,7 @@ function CareerPage() {
   );
 
   return (
-    <div>
+    <div className="mt-8">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900/20 via-background to-background"></div>
       <div className="absolute inset-0 noise-bg"></div>
       <div className="min-h-screen text-white">
@@ -156,51 +157,52 @@ function CareerPage() {
                   />
                 </motion.div>
                 <motion.h1
-                initial={{ y: 30, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="text-5xl sm:text-6xl md:text-7xl font-bold mb-8 leading-tight"
-              >
-                Master the Future of
-                <span className="block mt-2 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-                  Technology
-                </span>
-              </motion.h1>
+                  initial={{ y: 30, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  className="text-5xl sm:text-6xl md:text-7xl font-bold mb-8 leading-tight"
+                >
+                  Master the Future of
+                  <span className="block mt-2 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+                    Technology
+                  </span>
+                </motion.h1>
 
-              <motion.p
-                initial={{ y: 30, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed"
-              >
-                Join our expert-led courses and transform your career with cutting-edge skills in technology and development.
-              </motion.p>
+                <motion.p
+                  initial={{ y: 30, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                  className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed"
+                >
+                  Join our expert-led courses and transform your career with
+                  cutting-edge skills in technology and development.
+                </motion.p>
 
-              <motion.div
-                initial={{ y: 30, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.6 }}
-                className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
-              >
-                <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 transform hover:scale-105 transition-transform">
-                  <div className="text-5xl font-bold text-blue-400 mb-3">
-                    <CountUpAnimation end={50} suffix="+" />
+                <motion.div
+                  initial={{ y: 30, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.8, delay: 0.6 }}
+                  className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
+                >
+                  <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 transform hover:scale-105 transition-transform">
+                    <div className="text-5xl font-bold text-blue-400 mb-3">
+                      <CountUpAnimation end={50} suffix="+" />
+                    </div>
+                    <div className="text-gray-300 text-lg">Expert Courses</div>
                   </div>
-                  <div className="text-gray-300 text-lg">Expert Courses</div>
-                </div>
-                <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 transform hover:scale-105 transition-transform">
-                  <div className="text-5xl font-bold text-purple-400 mb-3">
-                    <CountUpAnimation end={100000} suffix="+" />
+                  <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 transform hover:scale-105 transition-transform">
+                    <div className="text-5xl font-bold text-purple-400 mb-3">
+                      <CountUpAnimation end={100000} suffix="+" />
+                    </div>
+                    <div className="text-gray-300 text-lg">Active Learners</div>
                   </div>
-                  <div className="text-gray-300 text-lg">Active Learners</div>
-                </div>
-                <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 transform hover:scale-105 transition-transform">
-                  <div className="text-5xl font-bold text-pink-400 mb-3">
-                    <CountUpAnimation end={92} suffix="%" />
+                  <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 transform hover:scale-105 transition-transform">
+                    <div className="text-5xl font-bold text-pink-400 mb-3">
+                      <CountUpAnimation end={92} suffix="%" />
+                    </div>
+                    <div className="text-gray-300 text-lg">Success Rate</div>
                   </div>
-                  <div className="text-gray-300 text-lg">Success Rate</div>
-                </div>
-              </motion.div>
+                </motion.div>
                 <motion.div
                   initial={{ y: 30, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
@@ -542,6 +544,15 @@ function CareerPage() {
                             transition={{ duration: 1, ease: "easeOut" }}
                           />
                         </div>
+                        <Button
+                          onClick={() => setSelectedPath(path)}
+                          size="sm"
+                          // variant="ghost"
+                          className="text-violet-400 hover:text-violet-300 hover:bg-violet-500/10 -mr-2 w-full"
+                        >
+                          View Course
+                          {/* <ChevronRight className="ml-1 w-4 h-4" /> */}
+                        </Button>
                       </div>
                     </motion.div>
                   ))}

@@ -3,7 +3,7 @@ import {
   Bold,
   BookOpen,
   Compass,
-  FileText,
+  // FileText,
   Frame,
   HeartHandshake,
   House,
@@ -48,19 +48,22 @@ const data = {
       url: "/roadmap",
       icon: Compass,
     },
-    {
-      title: "Resume Template",
-      url: "/resume-template",
-      icon: FileText,
-    },
+    // {
+    //   title: "Resume Template",
+    //   url: "/construction",
+    //   url: "/resume-template",
+    //   icon: FileText,
+    // },
     {
       title: "Skill-X",
+      // url: "/construction",
       url: "/skill-x",
       icon: Sparkles,
     },
     {
       title: "Blog",
-      url: "/blog",
+      // url: "/blog",
+      url: "/construction",
       icon: Bold,
     },
     // {

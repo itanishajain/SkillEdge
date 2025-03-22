@@ -28,6 +28,7 @@ import SkillX from "./pages/SkillX";
 import Notes from "@/pages/Notes";
 import Preloader from "./components/Preloader";
 import CareerPage from './pages/CareerPage';
+import UnderConstruction from './pages/UnderConstruction';
 
 // Import Toaster
 
@@ -59,11 +60,12 @@ export default function App() {
                 <SidebarProvider>
                   <AppSidebar />
                   <SidebarInset>
-                    <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+                    {/* <header className="flex shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12"> */}
+                    <header className="">
                       <div className="flex items-center gap-2 px-4">
                         <SidebarTrigger className="-ml-1 md:hidden" />
                       </div>
-                    </header>
+                    </header> 
                     <main>
                       <Routes>
                         <Route path="/" element={<Home />} />
@@ -78,6 +80,7 @@ export default function App() {
                         <Route path="/career" element={<CareerPage />} />
                         <Route path="/Profile" element={<Profile />} />
                         <Route path="/saved" element={<Saved />} />
+                        <Route path="/construction" element={<UnderConstruction />} />
                       </Routes>
                     </main>
                   </SidebarInset>
